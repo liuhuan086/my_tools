@@ -60,3 +60,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     path = args.path
     run(path)
+    # eg:
+    # python3 filecheck.py --path ./
+    # python3 filecheck.py --path /opt/proj
+    # python3 filecheck.py --path /opt/proj/test.sh
