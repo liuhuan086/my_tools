@@ -5,7 +5,7 @@ from threading import Thread
 
 file_keyword_dic = {}
 keywords = [
-    'user', "username", "password", "passwd", "secret", "access", "admin", "Admin", "root"
+    'user', "username", "password", "passwd", "secret", "access", "admin", "root"
 ]
 
 
@@ -13,13 +13,13 @@ def check(filename):
     try:
         with open(filename, 'r', encoding='utf-8') as f:
             for line in f.readlines():
-                line = line.strip()
-                for k in keywords:
-                    if k in line:
+                line = line.strip().lower()
+                for kw in keywords:
+                    if kw in line:
                         if filename not in file_keyword_dic.keys():
-                            file_keyword_dic[filename] = [k]
+                            file_keyword_dic[filename] = [kw]
                         else:
-                            file_keyword_dic[filename].append(k)
+                            file_keyword_dic[filename].append(kw)
     except Exception:
         pass
 
@@ -32,7 +32,7 @@ def put_file(base_path, queue: Queue):
                 fullname = os.path.join(root, f)
                 queue.put_nowait(fullname)
     else:
-        check(abs_path)
+        queue.put_nowait(abs_path)
 
 
 def get_file(queue: Queue):
